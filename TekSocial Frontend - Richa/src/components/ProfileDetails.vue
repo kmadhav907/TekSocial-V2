@@ -1,10 +1,10 @@
 <template>
-
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
 
   <div class="main-content" :class="{ 'shift-right': isSidebarExpanded }"
     style="background-color:black; margin: -8px z-index:99">
-   
+
     <!-- Page content -->
     <div class="container-fluid">
       <div class="row" style="margin-left: 100px">
@@ -13,15 +13,22 @@
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
-                  <img src="@/assets/Profile_photo.png" class="rounded-circle">
+                  <div class="card-profile-image-wrapper">
+                  <img :src="profilePic" class="rounded-circle">
+                  <input id="fileUpload" type="file" @change="uploadFileToBackend" style="display: none;">
+                  <svg
+                  @click="uploadFile()"
+                   xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#d5af2f" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+  <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
+  <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+</svg>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4" style="background-color: #1C1C1C">
-
-              <div class="col-4 text-right" style=" padding-left : 423px">
-                <a href="#!" class="btn btn-info float-right">Message</a>
-
+            <div class="card-header text-center border-0" style="background-color: #1C1C1C">
+              <div class="col-12 col-md-4 text-md-right">
+                <button class="btn btn-info float-md-right w-100 mb-2 mb-md-0">Chat</button>
               </div>
             </div>
             <div class="card-body pt-0 pt-md-4 ">
@@ -29,7 +36,7 @@
                 <div class="col">
                   <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                     <div>
-                    
+
                       <span class="description">Username : {{ userName }}</span>
                     </div>
 
@@ -40,7 +47,7 @@
                 <h3>
                   {{ firstName }} {{ lastName }} , <span class="font-weight-light"> {{ age }}</span>
                 </h3>
-               
+
                 <div class="h5 font-weight-300">
                   <i class="ni location_pin mr-2"></i>{{ city }}, {{ state }}
                 </div>
@@ -52,7 +59,7 @@
                 </div>
                 <hr class="my-4">
                 <p>{{ userAbout }}</p>
-                
+
               </div>
             </div>
           </div>
@@ -80,9 +87,8 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username">Username</label>
                         <input type="text" id="input-username" class="form-control form-control-alternative"
-                          placeholder="Username" v-model.trim="userName" :readonly="!editMode"
-                          :required="editMode"
-                          :class="{'is-invalid': userNameError}">
+                          placeholder="Username" v-model.trim="userName" :readonly="!editMode" :required="editMode"
+                          :class="{ 'is-invalid': userNameError }">
                         <div class="invalid-feedback">{{ userNameError }}</div>
                       </div>
                     </div>
@@ -91,8 +97,7 @@
                         <label class="form-control-label" for="input-email">Email address</label>
                         <input type="email" id="input-email" class="form-control form-control-alternative"
                           placeholder="jesse@example.com" v-model.trim="userEmail" :readonly="!editMode"
-                          :required="editMode"
-                          :class="{'is-invalid': userEmailError}">
+                          :required="editMode" :class="{ 'is-invalid': userEmailError }">
                         <div class="invalid-feedback">{{ userEmailError }}</div>
                       </div>
                     </div>
@@ -102,20 +107,18 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">First name</label>
                         <input type="text" id="input-first-name" class="form-control form-control-alternative"
-                          placeholder="First name" v-model="firstName" :readonly="!editMode"
-                          :required="editMode"
-                          :class="{'is-invalid': userfirstNameError}">
-                          <div class="invalid-feedback">{{ userfirstNameError }}</div>
+                          placeholder="First name" v-model="firstName" :readonly="!editMode" :required="editMode"
+                          :class="{ 'is-invalid': userfirstNameError }">
+                        <div class="invalid-feedback">{{ userfirstNameError }}</div>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-last-name">Last name</label>
                         <input type="text" id="input-last-name" class="form-control form-control-alternative"
-                          placeholder="Last name" v-model="lastName" :readonly="!editMode"
-                          :required="editMode"
-                          :class="{'is-invalid': userlastNameError}">
-                          <div class="invalid-feedback">{{ userlastNameError }}</div>
+                          placeholder="Last name" v-model="lastName" :readonly="!editMode" :required="editMode"
+                          :class="{ 'is-invalid': userlastNameError }">
+                        <div class="invalid-feedback">{{ userlastNameError }}</div>
                       </div>
                     </div>
                   </div>
@@ -150,7 +153,7 @@
                           placeholder="state" v-model="state" :readonly="!editMode">
                       </div>
                     </div>
-                    
+
                   </div>
                 </div>
                 <hr class="my-4">
@@ -180,17 +183,21 @@
                       :readonly="!editMode">Passionate about Life</textarea>
                   </div>
                 </div>
-               
+
                 <div class="submit-button">
-                 
-                    <button v-if="editMode" class="btn mt-4" :disabled="userNameError || userEmailError || userfirstNameError || userlastNameError" @click="submitDataToBacked(); editMode = false; showModal()">Save</button>
+
+                  <button v-if="editMode" class="btn mt-4"
+                    :disabled="userNameError || userEmailError || userfirstNameError || userlastNameError"
+                    @click="submitDataToBacked(); editMode = false; showModal()">Save</button>
                 </div>
-                <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel"
+                  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content bg-dark text-light">
                       <div class="modal-header">
                         <h5 class="modal-title" id="successModalLabel">Success</h5>
-                        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close text-light" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
                         Your changes have been saved successfully.
@@ -198,11 +205,11 @@
                     </div>
                   </div>
                 </div>
-               
+
 
 
               </form>
-             
+
             </div>
           </div>
         </div>
@@ -215,8 +222,8 @@
 
 
 <script setup>
-import { ref, onMounted , watch, computed} from "vue";
-import { getDataForUser, updateDataForUser } from "../services/APIServices";
+import { ref, onMounted, watch, computed } from "vue";
+import { getDataForUser, updateDataForUser, uploadImageFile } from "../services/APIServices";
 
 import { Modal } from 'bootstrap';
 
@@ -233,6 +240,7 @@ let firstName = ref(null);
 let lastName = ref(null);
 let userName = ref(null);
 let userEmail = ref(null);
+let profilePic = ref(null);
 let userContact = ref("");
 let userAbout = ref("");
 let age = ref("");
@@ -241,9 +249,28 @@ let state = ref("");
 let idOfUser = window.location.href.split("/").pop();
 onMounted(() => getDataFromBackend(idOfUser));
 
-
+const uploadFile = ()=> {
+  document.getElementById("fileUpload").click();
+}
 // let showSuccessAlert =false ;
+const uploadFileToBackend = (event)=> {
+  let image = event.target.files[0];
+  let reader = new FileReader();
 
+  reader.onload = event => {
+    profilePic.value = event.target.result;
+  }
+  reader.readAsDataURL(image);
+  let formData = new FormData();
+  formData.append("file", image);
+  formData.append("userId", idOfUser);
+  uploadImageFile(formData).then((response)=> {
+    profilePic.value = response.data
+  }).catch((error)=> {
+    console.log(error);
+  })
+
+}
 watch(userName, (val) => {
   if (!val && editMode.value) {
     userNameError.value = 'Username is required';
@@ -277,7 +304,7 @@ watch(userEmail, (val) => {
 });
 
 const hasErrors = computed(() => {
-  return !!userNameError.value || !!userEmailError.value || 
+  return !!userNameError.value || !!userEmailError.value ||
     !!userfirstNameError.value || !!userlastNameError.value;
 });
 
@@ -294,6 +321,7 @@ const getDataFromBackend = (id) => {
       city.value = response.city;
       age.value = response.age;
       state.value = response.state;
+      profilePic.value = response.profilePic || "https://picsum.photos/200";
     })
     .catch((response) => {
       console.log(response);
@@ -367,7 +395,7 @@ export default {
   // },
   props: {
     // isSidebarExpanded: Boolean,
-    
+
   },
   data() {
     return {
@@ -1167,16 +1195,25 @@ button.bg-secondary:focus {
   position: relative;
 }
 
-.card-profile-image img {
+.card-profile-image .card-profile-image-wrapper {
   margin-top: 93px;
   position: absolute;
   left: 50%;
-  max-width: 180px;
+  z-index: 10;
+}
+.card-profile-image img {
+  height: 150px;
+  width: 150px;
+  position: relative;
   transition: all 0.15s ease;
   transform: translate(-50%, -30%);
-  border-radius: 0.375rem;
+  border-radius: 50%;
 }
-
+.card-profile-image svg, .card-profile-image input {
+  position: absolute;
+  left: 45%;
+  bottom: 52px;
+}
 .card-profile-image img:hover {
   transform: translate(-50%, -33%);
 }
@@ -1355,4 +1392,5 @@ input.disabled-input {
   background-color: #f8f9fe;
   color: #8898aa;
   cursor: not-allowed;
-}</style>
+}
+</style>

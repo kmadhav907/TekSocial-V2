@@ -28,4 +28,12 @@ public class FriendsModel {
     @Column(name="status")
     private String status;
 
+    @Column(name="created_at")
+    private String createdAt;
+
+    @Column(name="deleted_at")
+    private String deletedAt;
+
+    @Column(name="updated_at")
+    private String updatedAt;
 }

@@ -93,3 +93,13 @@ export const acceptFriendRequest = (profileId, userId)=> {
   };
   return callAndReturn(`/acceptrequest/${profileId}/${userId}`, options);
 }
+export const uploadImageFile = (data)=> {
+  const options = {
+    method: "POST",
+    headers: {
+  
+    },
+    body: data
+  }
+  return callAndReturn("/uploadprofileimage", options);
+}

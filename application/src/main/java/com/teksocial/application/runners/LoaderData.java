@@ -86,6 +86,8 @@ public class LoaderData implements ApplicationRunner {
         friendsModel.setFriendRequestToId(1L);
         friendsModel.setFriendRequestSentById(2L);
         friendsModel.setStatus(GlobalUtilities.FRIEND_PENDING_REQUEST);
+        friendsModel.setCreatedAt(GlobalUtilities.formatDateAndTime(LocalDateTime.now()));
+        friendsModel.setUpdatedAt(GlobalUtilities.formatDateAndTime(LocalDateTime.now()));
         friendsRequest.save(friendsModel);
 
 

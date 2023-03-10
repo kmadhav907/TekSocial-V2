@@ -56,7 +56,7 @@
 
   let userProfiles = ref([]);
   let friendRequest = ref([]);
-  let userId = ref(3);
+  let userId = ref(1);
   onMounted(()=> {
     onLoadFunction();
   })
