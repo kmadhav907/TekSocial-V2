@@ -5,6 +5,7 @@ import SideNav from '../components/SideNav.vue'
 import Home from '../components/Home.vue'
 import FriendsView from '../components/FriendsView.vue'
 import SignupLogin from '../components/SignupLogin.vue'
+import ChatView from '../components/ChatView.vue'
 
 
 const routes = [
@@ -29,8 +30,12 @@ const routes = [
     path: '/profile/:id',
     name: 'profile',
     component: ProfileDetails,
-    
   },
+  {
+    path:"/chat",
+    name:"ChatView",
+    component: ChatView,
+  }
 
  
 
